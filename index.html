@@ -412,18 +412,24 @@
 
     /* ── AUTH SCREEN ── */
     #screen-auth {
-      background: #fff;
+      background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url('bg.jpg');
+      background-size: cover;
+      background-position: center;
       display: none;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 40px 30px;
+      justify-content: space-between;
+      padding: 60px 30px 0;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
+    
     #screen-auth.active { display: flex; }
-    .auth-logo { font-size: 32px; font-weight: 900; letter-spacing: 0.05em; color: #111; margin-bottom: 10px; }
-    .auth-sub { font-size: 14px; color: #666; margin-bottom: 40px; }
-    .auth-form { width: 100%; display: flex; flex-direction: column; gap: 15px; }
+    
+    .auth-logo { font-size: 32px; font-weight: 900; letter-spacing: 0.05em; color: #111; margin-bottom: 8px; position: relative; z-index: 1; }
+    .auth-sub { font-size: 14px; color: #666; margin-bottom: 40px; position: relative; z-index: 1; }
+    .auth-form { width: 100%; display: flex; flex-direction: column; gap: 15px; position: relative; z-index: 1; }
     .input-group { text-align: left; }
     .input-group label { font-size: 12px; font-weight: 700; color: #999; text-transform: uppercase; margin-bottom: 6px; display: block; }
     .auth-input {
@@ -464,13 +470,35 @@
 
   <!-- ══ SCREEN 0: AUTH ══ -->
   <div class="screen" id="screen-auth">
-    <div class="auth-logo">CITYFLOW AI</div>
-    <div class="auth-sub">Pune's Smart Navigation</div>
-    
-    <div class="auth-form">
-      <button class="auth-btn" id="google-signin-btn" onclick="handleGoogleSignIn()">
-        <span style="margin-right: 10px;">G</span> Continue with Google
-      </button>
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+      <img src="Logo.png" alt="CityFlow AI" 
+        style="width:200px; height:auto; margin-bottom:24px; 
+        border-radius:24px; box-shadow: 0 12px 32px rgba(0,0,0,0.1);"/> 
+      <div class="auth-logo">CITYFLOW AI</div>
+      <div class="auth-sub">Pune's Smart Navigation & Traffic AI</div>
+      
+      <div class="auth-form">
+        <button class="auth-btn" id="google-signin-btn" onclick="handleGoogleSignIn()" 
+          style="background: #fff; color: #111; border: 1.5px solid #E8E8E8; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+          <span style="margin-right: 10px; font-weight: 900; color: #4285F4;">G</span> Continue with Google
+        </button>
+      </div>
+    </div>
+
+    <!-- Feature highlights at the bottom -->
+    <div style="padding: 40px 20px; width: 100%; display: flex; justify-content: space-around; border-top: 1px solid rgba(0,0,0,0.05); background: rgba(255,255,255,0.6); backdrop-filter: blur(4px);">
+      <div style="text-align: center; font-size: 11px; color: #666; font-weight: 600;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🚦</div>
+        Live Traffic
+      </div>
+      <div style="text-align: center; font-size: 11px; color: #666; font-weight: 600;">
+        <div style="font-size: 20px; margin-bottom: 6px;">⚠️</div>
+        Hazard Alerts
+      </div>
+      <div style="text-align: center; font-size: 11px; color: #666; font-weight: 600;">
+        <div style="font-size: 20px; margin-bottom: 6px;">🤖</div>
+        AI Routing
+      </div>
     </div>
   </div>
 
@@ -499,13 +527,17 @@
       </div>
 
       <!-- New Home Search UI -->
-      <div class="where-box" style="cursor: default; background: #fff; padding: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); border: 1px solid #f0f0f0;">
-        <div style="font-size: 16px; font-weight: 800; color: #111; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+      <div class="where-box" style="cursor: default; background: #fff; padding: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); border: 1px solid #f0f0f0; width: 100%;">
+        <div style="font-size: 15px; font-weight: 800; color: #111; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <span style="color: #4F46E5;">📍</span> Where to?
         </div>
-        <div class="nav-search-box">
-          <input type="text" id="destination-input" placeholder="Search destination in Pune..." autocomplete="off">
-          <button class="search-btn" onclick="handleSearch()">Search</button>
+        <div class="nav-search-box" style="position: relative; width: 100%; display: flex; align-items: center; background: #fff; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+          <input type="text" id="destination-input" placeholder="Search destination in Pune..." autocomplete="off" 
+            style="flex: 1; border: none; padding: 12px 16px; font-size: 15px; outline: none; min-width: 0;">
+          <button class="search-btn" onclick="handleSearch()" 
+            style="background: #4F46E5; color: #fff; border: none; padding: 8px 16px; margin: 4px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; flex-shrink: 0;">
+            Search
+          </button>
           <div id="suggestions-list" class="suggestions-list"></div>
         </div>
       </div>
@@ -713,124 +745,7 @@
 
 <!-- UI Global Functions -->
 <script>
-  const MAPTILER_KEY = "BHzJ3UuxjI2ZgrtTB3YC";
-  const KOTHRUD   = [73.8077, 18.5074]; // [lng, lat]
-  const HINJEWADI = [73.7389, 18.5912]; // [lng, lat]
-  const HAZARD_PT = [73.7638, 18.5904]; // [lng, lat]
-
-  window.homeMap = null;
-  window.navMap = null;
-
-  async function fetchRoute(start, end, waypoints = []) {
-    let points = `${start[0]},${start[1]}`;
-    if (waypoints.length > 0) {
-      points += ';' + waypoints.map(w => `${w[0]},${w[1]}`).join(';');
-    }
-    points += `;${end[0]},${end[1]}`;
-    const url = `https://router.project-osrm.org/route/v1/driving/${points}?overview=full&geometries=geojson`;
-    const res  = await fetch(url);
-    const data = await res.json();
-    return data.routes[0].geometry;
-  }
-
-  function goTo(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    if (id === 'screen-home'     && !window.homeMap) setTimeout(initHomeMap, 60);
-    if (id === 'screen-nav'      && !window.navMap)  setTimeout(initNavMap,  60);
-    if (id === 'screen-complete')             setTimeout(animateCoins, 300);
-    setTimeout(() => {
-      if (window.homeMap) window.homeMap.resize();
-      if (window.navMap)  window.navMap.resize();
-    }, 80);
-  }
-
-  async function initHomeMap() {
-    if (window.homeMap) return;
-    window.homeMap = new maplibregl.Map({
-      container: 'home-map',
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
-      center: [73.7700, 18.5500],
-      zoom: 12,
-      interactive: false,
-      attributionControl: false
-    });
-
-    window.homeMap.on('load', async () => {
-      new maplibregl.Marker({ color: '#4F46E5' }).setLngLat(KOTHRUD).addTo(window.homeMap);
-      new maplibregl.Marker({ color: '#22C55E' }).setLngLat(HINJEWADI).addTo(window.homeMap);
-
-      try {
-        const geojson = await fetchRoute(KOTHRUD, HINJEWADI);
-        window.homeMap.addSource('route', { type: 'geojson', data: geojson });
-        window.homeMap.addLayer({
-          id: 'route',
-          type: 'line',
-          source: 'route',
-          layout: { 'line-join': 'round', 'line-cap': 'round' },
-          paint: { 'line-color': '#4F46E5', 'line-width': 4, 'line-opacity': 0.8 }
-        });
-
-        const coordinates = geojson.coordinates;
-        const bounds = coordinates.reduce((acc, coord) => acc.extend(coord), new maplibregl.LngLatBounds(coordinates[0], coordinates[0]));
-        window.homeMap.fitBounds(bounds, { padding: 20 });
-      } catch(e) {
-        console.error("Home route error:", e);
-      }
-    });
-  }
-
-  async function initNavMap() {
-    if (window.navMap) return;
-    window.navMap = new maplibregl.Map({
-      container: 'nav-map',
-      style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${MAPTILER_KEY}`,
-      center: [73.7820, 18.5280],
-      zoom: 14,
-      attributionControl: false
-    });
-
-    window.navMap.on('load', async () => {
-      const el = document.createElement('div');
-      el.className = 'marker';
-      el.innerHTML = `<div style="background:#DC2626;color:#fff;font-size:13px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.35);font-weight:700;">!</div>`;
-      
-      new maplibregl.Marker(el)
-        .setLngLat(HAZARD_PT)
-        .setPopup(new maplibregl.Popup({ offset: 25 }).setHTML('Pothole cluster · Wakad Chowk'))
-        .addTo(window.navMap);
-
-      try {
-        const BANER_WAYPOINT = [73.7769, 18.5592];
-        const geojson = await fetchRoute(KOTHRUD, HINJEWADI, [BANER_WAYPOINT]);
-        window.navMap.addSource('route', { type: 'geojson', data: geojson });
-        window.navMap.addLayer({
-          id: 'route',
-          type: 'line',
-          source: 'route',
-          layout: { 'line-join': 'round', 'line-cap': 'round' },
-          paint: { 'line-color': '#4F46E5', 'line-width': 5, 'line-opacity': 0.9 }
-        });
-
-        const coords = geojson.coordinates;
-        const userPos = coords[Math.floor(coords.length * 0.25)];
-        
-        const userEl = document.createElement('div');
-        userEl.style.width = '20px';
-        userEl.style.height = '20px';
-        userEl.style.backgroundColor = '#4F46E5';
-        userEl.style.borderRadius = '50%';
-        userEl.style.border = '3px solid #fff';
-        new maplibregl.Marker(userEl).setLngLat(userPos).addTo(window.navMap);
-
-        const bounds = coords.reduce((acc, coord) => acc.extend(coord), new maplibregl.LngLatBounds(coords[0], coords[0]));
-        window.navMap.fitBounds(bounds, { padding: { top: 80, bottom: 80, left: 20, right: 20 } });
-      } catch(e) {
-        console.error("Nav route error:", e);
-      }
-    });
-  }
-
+  // Demo functions for UI animations and hazards
   function showHazard() {
     document.getElementById('hazard-overlay').classList.add('show');
     document.getElementById('status-dot').className = 'dot red';
@@ -859,13 +774,14 @@
     go();
   }
 
-  // Auth & Global Functions
-  function showAuthScreen() { if (window.showAuthScreen) window.showAuthScreen(); }
-  function hideAuthScreen() { if (window.hideAuthScreen) window.hideAuthScreen(); }
-  function handleGoogleSignIn() { if (window.handleGoogleSignIn) window.handleGoogleSignIn(); }
-  function logout() { if (window.logout) window.logout(); }
-
-  window.addEventListener('load', () => setTimeout(initHomeMap, 150));
+  // Ensure home map loads on first load if already logged in
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+        if (document.getElementById('screen-home').classList.contains('active')) {
+            if (window.initHomeMap) window.initHomeMap();
+        }
+    }, 500);
+  });
 </script>
 
 </body>

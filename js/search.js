@@ -18,8 +18,8 @@ export async function fetchSuggestions(query) {
         return;
     }
 
-    // Bias to Pune: approx 18.52, 73.85
-    const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(query)}.json?key=${MAPTILER_KEY}&proximity=73.85,18.52&bbox=73.6,18.3,74.1,18.8&autocomplete=true`;
+    // Expanded search for Pune: bbox covering more area including Wagholi and Viman Nagar
+    const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(query)}.json?key=${MAPTILER_KEY}&proximity=73.85,18.52&bbox=73.5,18.2,74.2,18.9&autocomplete=true`;
 
     try {
         const res = await fetch(url);
@@ -71,7 +71,8 @@ export async function handleSearch() {
     const query = input.value.trim();
     if (!query) return;
 
-    const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(query)}.json?key=${MAPTILER_KEY}&proximity=73.85,18.52&bbox=73.6,18.3,74.1,18.8`;
+    // Expanded search for Pune
+    const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(query)}.json?key=${MAPTILER_KEY}&proximity=73.85,18.52&bbox=73.5,18.2,74.2,18.9`;
 
     try {
         const res = await fetch(url);
