@@ -3,7 +3,11 @@
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('SW registered!', reg))
+            .then(reg => {
+                console.log('SW registered!', reg);
+                // Check for updates
+                reg.update();
+            })
             .catch(err => console.log('SW registration failed!', err));
     });
 }

@@ -11,5 +11,6 @@ export const FIREBASE_CONFIG = {
 export const MAPTILER_KEY = "BHzJ3UuxjI2ZgrtTB3YC";
 
 // Expose to global window object for scripts that don't use modules
-window.MAPTILER_KEY = MAPTILER_KEY;
+window.MAPTILER_KEY = "BHzJ3UuxjI2ZgrtTB3YC";
 window.FIREBASE_CONFIG = FIREBASE_CONFIG;
+

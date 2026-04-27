@@ -64,6 +64,7 @@ onAuthStateChanged(auth, (user) => {
         const elements = {
             'user-display-name': firstName,
             'insight-user-name': firstName,
+            'insight-quote-user-name': firstName,
             'complete-user-name': firstName
         };
 
