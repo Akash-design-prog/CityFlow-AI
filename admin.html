@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CityFlow AI - Admin Controller</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; padding: 20px; background: #f4f4f4; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        h1 { font-size: 20px; margin-bottom: 20px; }
+        button { 
+            width: 100%; padding: 12px; margin-bottom: 10px; border: none; border-radius: 8px; 
+            background: #4F46E5; color: white; font-weight: bold; cursor: pointer;
+        }
+        button.danger { background: #DC2626; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Demo Controller (Admin)</h1>
+        <p>Trigger events for the PWA client:</p>
+        <button onclick="triggerHazard()">Simulate Global Hazard Alert</button>
+        <button class="danger" onclick="clearHazard()">Clear All Hazards</button>
+        <button onclick="addCoins()">Reward User +50 Coins</button>
+    </div>
+
+    <script>
+        function triggerHazard() {
+            alert('Hazard event triggered (Simulation)');
+            // Future: Write to Firestore to trigger real-time updates
+        }
+        function clearHazard() {
+            alert('Hazards cleared (Simulation)');
+        }
+        function addCoins() {
+            alert('Coins rewarded (Simulation)');
+        }
+    </script>
+</body>
+</html>
