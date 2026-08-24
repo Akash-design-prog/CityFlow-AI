@@ -6,8 +6,12 @@ export function animateCoins() {
     
     if (!el) return;
 
-    // Calculate real values for demo route
-    const dist = 8.1;
+    // Use real distance from the last calculated route if available,
+    // falling back to the demo distance if the user skipped straight
+    // to this screen without searching a destination.
+    const dist = (window.lastRouteData && window.lastRouteData.distance)
+        ? parseFloat(window.lastRouteData.distance)
+        : 8.1;
     const mode = 'pmpmlBus';
     const co2Kg = window.co2Calc ? window.co2Calc.co2AvoidedKg(mode, dist) : 0.75;
     const finalCoins = window.co2Calc ? window.co2Calc.coinsFor(co2Kg, dist) : 54;
